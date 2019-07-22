@@ -5,6 +5,7 @@ import os
 from collections import namedtuple
 
 import numpy as np
+import tqdm as tqdm
 
 from .backend import keras
 from .backend import backend as K
@@ -76,7 +77,7 @@ def extract_embeddings_generator(model,
                     segments[i].extend([0] * (max_len - len(segments[i])))
             return [np.array(tokens), np.array(segments)]
 
-        for text in texts:
+        for text in tqdm(texts,total=len(texts)):
             if isinstance(text, (str, type(u''))):
                 token, segment = tokenizer.encode(text, max_len=seq_len)
             else:
